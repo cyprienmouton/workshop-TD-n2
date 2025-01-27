@@ -13,14 +13,23 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Install Dependencies
-      run: npm install -g ipfs-deploy
+    - name: Deploy all files
+      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
+      with:
+        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
+        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
+        pathToUpload: ./
 
-    - name: Check ipfs-deploy version
-      run: ipfs-deploy --version
+    - name: Deploy partition1 folder
+      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
+      with:
+        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
+        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
+        pathToUpload: ./partition1
 
-    - name: Deploy to IPFS via Pinata
-      env:
-        PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
-        PINATA_API_SECRET: ${{ secrets.PINATA_API_SECRET }}
-      run: ipfs-deploy -p pinata ./
+    - name: Deploy Chaton.jpeg only
+      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
+      with:
+        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
+        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
+        pathToUpload: ./Chaton.jpeg
