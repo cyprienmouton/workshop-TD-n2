@@ -1,4 +1,4 @@
-name: Deploy to IPFS with Pinata
+name: Deploy Website to IPFS
 
 on:
   push:
@@ -13,23 +13,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Deploy all files
-      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
-      with:
-        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
-        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
-        pathToUpload: ./
+    - name: Install Dependencies
+      run: npm install pinata-web3
 
-    - name: Deploy partition1 folder
-      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
-      with:
-        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
-        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
-        pathToUpload: ./partition1
-
-    - name: Deploy Chaton.jpeg only
-      uses: popovoleksandr/ipfs-pinata-deploy-action@v1
-      with:
-        pinataApiKey: ${{ secrets.PINATA_API_KEY }}
-        pinataSecretApiKey: ${{ secrets.PINATA_API_SECRET }}
-        pathToUpload: ./Chaton.jpeg
+    - name: Deploy Website to IPFS
+      run: |
+        node uploadWebsite.js
+      env:
+        PINATA_JWT: ${{ secrets.PINATA_JWT }}
+        PINATA_GATEWAY: ${{ secrets.PINATA_GATEWAY }}
