@@ -16,8 +16,11 @@ jobs:
     - name: Install Dependencies
       run: npm install -g ipfs-deploy
 
+    - name: Check ipfs-deploy version
+      run: ipfs-deploy --version
+
     - name: Deploy to IPFS via Pinata
       env:
         PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
         PINATA_API_SECRET: ${{ secrets.PINATA_API_SECRET }}
-      run: ipfs-deploy -p pinata ./  
+      run: ipfs-deploy -p pinata ./
